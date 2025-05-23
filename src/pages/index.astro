@@ -72,6 +72,38 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       .social-icons a:hover {
         background: #f0f0f0;
       }
+
+      .search-bar {
+        margin: 2em auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .search-input {
+        width: 60%;
+        padding: 0.8em;
+        font-size: 1.2em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-button {
+        margin-left: 1em;
+        padding: 0.8em 1.5em;
+        font-size: 1.2em;
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-button:hover {
+        background-color: #357ae8;
+      }
     </style>
   </head>
   <body>
@@ -89,6 +121,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         <a href="/about" class="button">About</a>
         <a href="/author" class="button">Author</a> <!-- Added link to Author page -->
       </section>
+
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search..." />
+        <button class="search-button">Search</button>
+      </div>
 
       <footer class="social-icons">
         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
@@ -109,5 +146,40 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       </footer>
     </main>
     <Footer />
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchButton = document.querySelector('.search-button');
+        const searchInput = document.querySelector('.search-input');
+
+        if (searchButton && searchInput) {
+          searchButton.addEventListener('click', () => {
+            const query = searchInput.value.toLowerCase();
+            const posts = document.querySelectorAll('.blog-post');
+
+            posts.forEach(post => {
+              const titleElement = post.querySelector('.post-title');
+              if (titleElement) {
+                const title = titleElement.textContent.toLowerCase();
+                post.style.display = title.includes(query) ? 'block' : 'none';
+              }
+            });
+          });
+        }
+      });
+    </script>
+
+    <!-- Example blog posts for testing -->
+    <div class="blog-post">
+      <h2 class="post-title">First Blog Post</h2>
+      <p>Content of the first blog post...</p>
+    </div>
+    <div class="blog-post">
+      <h2 class="post-title">Second Blog Post</h2>
+      <p>Content of the second blog post...</p>
+    </div>
+    <div class="blog-post">
+      <h2 class="post-title">Third Blog Post</h2>
+      <p>Content of the third blog post...</p>
+    </div>
   </body>
 </html>
