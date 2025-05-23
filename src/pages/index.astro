@@ -7,43 +7,107 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .homepage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2em;
+        font-family: 'Atkinson Regular', sans-serif;
+      }
+
+      .profile {
+        margin-bottom: 2em;
+      }
+
+      .profile-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 1em;
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-bottom: 2em;
+      }
+
+      .button {
+        display: block;
+        padding: 1em;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+      }
+
+      .button:hover {
+        background: #f0f0f0;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1em;
+      }
+
+      .social-icons a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .social-icons a:hover {
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main class="homepage">
+      <section class="profile">
+        <img src="/public/Bbqdropout-logo.png" alt="Profile picture of BBQ Dropout" class="profile-image" />
+        <h1>BBQ Dropout</h1>
+        <p>Living in the heart of the Texas Hill Country, BBQ Dropout is a brand that celebrates the art of Texas barbecue. From sharing recipes to showcasing the best barbecue techniques, BBQ Dropout is your go-to source for all things smoked and delicious.</p>
+      </section>
+
+      <section class="links">
+        <a href="/blog" class="button">Blog</a>
+        <a href="https://youtube.com/@bbqdropout" class="button" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="/about" class="button">About</a>
+        <a href="/author" class="button">Author</a> <!-- Added link to Author page -->
+      </section>
+
+      <footer class="social-icons">
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <path fill="currentColor" d="...Twitter SVG path data..."></path>
+          </svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <path fill="currentColor" d="...Facebook SVG path data..."></path>
+          </svg>
+        </a>
+        <a href="https://spotify.com" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <path fill="currentColor" d="...Spotify SVG path data..."></path>
+          </svg>
+        </a>
+      </footer>
+    </main>
+    <Footer />
+  </body>
 </html>

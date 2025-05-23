@@ -8,55 +8,84 @@ import Layout from '../layouts/BlogPost.astro';
 	pubDate={new Date('August 08 2021')}
 	heroImage="/blog-placeholder-about.jpg"
 >
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+	<main class="about-page">
+		<section class="hero">
+			<h1>Welcome to BBQ Dropout</h1>
+			<p>Discover the journey of Robert McCall and his passion for Texas barbecue.</p>
+		</section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+		<section class="profile">
+			<h2>About Robert</h2>
+			<p>
+				Living in the heart of the Texas Hill Country, Robert has been around barbecue his entire
+				life. Around the time he turned 18, Robert decided to save up and buy his first smoker, a
+				tiny little 18in Weber Smokey Mountain. It served its purpose, smoking all sorts of
+				meats ranging from pork shoulder to brisket. Eventually, Robert upgraded to his first-ever
+				Cast Iron offset smoker from a local retailer in San Antonio. Ten years later, the smoker
+				is still standing strong and producing amazing Texas barbecue!
+			</p>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			<p>
+				Throughout this time, Robert also started an Instagram page, BBQ Dropout, where he shares
+				pictures of his barbecue journey. Additionally, he launched a YouTube channel to produce
+				high-quality barbecue video content.
+			</p>
+		</section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+		<section class="team">
+			<h2>Meet The Team</h2>
+			<div class="team-member">
+				<h3>Robert McCall</h3>
+				<p>Founder of BBQDropout.com</p>
+				<p>
+					Robert launched BBQ Dropout in 2020 as a way to showcase his love of cooking amazing
+					smoked food. Since then, the brand has grown across multiple social media platforms and
+					continues to expand its presence in the industry. A born and raised central Texan, Robert
+					grew up around some of the world’s BEST barbecue and is now ready to show the world how
+					it’s done.
+				</p>
+			</div>
+		</section>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+		<section class="gallery">
+			<h2>Gallery</h2>
+			<div class="images">
+				<img src="/public/blog-placeholder-1.jpg" alt="Barbecue image 1" />
+				<img src="/public/blog-placeholder-2.jpg" alt="Barbecue image 2" />
+				<img src="/public/blog-placeholder-3.jpg" alt="Barbecue image 3" />
+			</div>
+		</section>
+	</main>
+
+	<style>
+		.about-page {
+			padding: 2em;
+			font-family: 'Atkinson Regular', sans-serif;
+			line-height: 1.6;
+		}
+
+		.hero {
+			text-align: center;
+			margin-bottom: 2em;
+		}
+
+		.profile,
+		.team,
+		.gallery {
+			margin-bottom: 2em;
+		}
+
+		.gallery .images {
+			display: flex;
+			gap: 1em;
+			justify-content: center;
+		}
+
+		.gallery img {
+			width: 200px;
+			height: auto;
+			border-radius: 8px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+	</style>
 </Layout>

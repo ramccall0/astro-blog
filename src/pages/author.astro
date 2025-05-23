@@ -1,0 +1,88 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="About Robert McCall" description="Learn more about Robert McCall, the founder of BBQ Dropout." />
+    <style>
+      .author-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2em;
+        font-family: 'Atkinson Regular', sans-serif;
+      }
+
+      .author-profile {
+        margin-bottom: 2em;
+      }
+
+      .author-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 1em;
+      }
+
+      .author-bio {
+        max-width: 600px;
+        line-height: 1.6;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1em;
+        margin-top: 2em;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .social-links a:hover {
+        background: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main class="author-page">
+      <section class="author-profile">
+        <img src="/public/Bbqdropout-logo.png" alt="Profile picture of Robert McCall" class="author-image" />
+        <h1>Robert McCall</h1>
+        <p class="author-bio">Robert McCall, the founder of BBQ Dropout, is a passionate barbecue enthusiast hailing from the Texas Hill Country. With years of experience perfecting the art of smoking meats, Robert has built a community of barbecue lovers through his blog, YouTube channel, and social media. His mission is to share the joy of Texas barbecue with the world, one smoked brisket at a time.</p>
+      </section>
+
+      <section class="social-links">
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <path fill="currentColor" d="...Twitter SVG path data..."></path>
+          </svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <path fill="currentColor" d="...Facebook SVG path data..."></path>
+          </svg>
+        </a>
+        <a href="https://youtube.com/@bbqdropout" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
+            <path fill="currentColor" d="...YouTube SVG path data..."></path>
+          </svg>
+        </a>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
