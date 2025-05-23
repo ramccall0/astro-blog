@@ -142,6 +142,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <body>
     <Header />
     <main class="homepage">
+      <!-- Search bar moved to top -->
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search..." />
+        <button class="search-button">Search</button>
+      </div>
       <section class="profile">
         <img src="/public/Bbqdropout-logo.png" alt="Profile picture of BBQ Dropout" class="profile-image" />
         <h1>BBQ Dropout</h1>
@@ -154,11 +159,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         <a href="/about" class="button">About</a>
         <a href="/author" class="button">Author</a> <!-- Added link to Author page -->
       </section>
-
-      <div class="search-bar">
-        <input type="text" class="search-input" placeholder="Search..." />
-        <button class="search-button">Search</button>
-      </div>
 
       <footer class="social-icons">
         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
@@ -183,79 +183,76 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       import FlexSearch from 'https://esm.run/flexsearch';
 
       document.addEventListener('DOMContentLoaded', async () => {
-        const searchInput = document.querySelector('.search-input');
-        const homepage    = document.querySelector('.homepage');
+        const searchInput  = document.querySelector('.search-input');
+        const searchButton = document.querySelector('.search-button');
+        const homepage     = document.querySelector('.homepage');
+        const searchBar    = document.querySelector('.search-bar');
 
-        // Create results container
+        /* -------- Results container -------- */
         const resultBox = document.createElement('div');
         resultBox.className = 'search-results';
-        homepage.appendChild(resultBox);
+        (searchBar ?? homepage).after(resultBox);
 
-        // Fetch pre‑built index
+        /* -------- Try to load pre‑built JSON index -------- */
         let data = [];
+        let index = null;
+
         try {
           const res = await fetch('/search.json');
-          if (!res.ok) throw new Error('Index fetch failed');
-          data = await res.json();
-        } catch (err) {
-          console.error(err);
-          resultBox.innerHTML = '<p style="color:red;">Search unavailable at the moment.</p>';
-          return; // abort search setup
+          if (res.ok) {
+            data = await res.json();
+            index = new FlexSearch.Index({ tokenize: 'forward', cache: 100 });
+            data.forEach((post, id) =>
+              index.add(id, `${post.title} ${post.excerpt} ${post.body}`)
+            );
+          }
+        } catch (_) {
+          /* ignore fetch errors – we'll fall back */
         }
 
-        // Build FlexSearch index
-        const index = new FlexSearch.Index({ tokenize: 'forward', cache: 100 });
-        data.forEach((post, id) =>
-          index.add(id, `${post.title} ${post.excerpt} ${post.body}`)
-        );
+        const domPosts = Array.from(document.querySelectorAll('.blog-post'));
 
-        // Render helper
-        const render = (ids = [], query = '') => {
+        /* -------- Render helpers -------- */
+        const renderIndexHits = (ids = [], query = '') => {
           if (!query) {
             resultBox.innerHTML = '';
             return;
           }
-
           if (ids.length === 0) {
             resultBox.innerHTML = `<p>No results found for "<strong>${query}</strong>".</p>`;
             return;
           }
-
           resultBox.innerHTML = ids
             .map(i => `<a href="/blog/${data[i].slug}">${data[i].title}</a>`)
             .join('');
         };
 
-        // Live search
-        searchInput.addEventListener('input', () => {
-          const q   = searchInput.value.trim();
-          const ids = q ? index.search(q, 10) : [];
-          render(ids, q);
-        });
+        const filterDomPosts = (query = '') => {
+          domPosts.forEach(post => {
+            const title = post.querySelector('.post-title')?.textContent.toLowerCase() ?? '';
+            post.style.display = query && !title.includes(query) ? 'none' : '';
+          });
+        };
 
-        // Enter key triggers same search
-        searchInput.addEventListener('keyup', (e) => {
-          if (e.key === 'Enter') {
-            const q   = searchInput.value.trim();
+        /* -------- Main search dispatcher -------- */
+        const doSearch = () => {
+          const q = searchInput.value.trim().toLowerCase();
+          if (index) {
             const ids = q ? index.search(q, 10) : [];
-            render(ids, q);
+            renderIndexHits(ids, q);
+          } else {
+            resultBox.innerHTML = '';          // hide separate results if using DOM filter
+            filterDomPosts(q);
           }
+        };
+
+        /* -------- Wire up events -------- */
+        searchInput.addEventListener('input', doSearch);
+        searchInput.addEventListener('keyup', (e) => {
+          if (e.key === 'Enter') doSearch();
         });
+        searchButton?.addEventListener('click', doSearch);
       });
     </script>
-
-    <!-- Example blog posts for testing -->
-    <div class="blog-post">
-      <h2 class="post-title">First Blog Post</h2>
-      <p>Content of the first blog post...</p>
-    </div>
-    <div class="blog-post">
-      <h2 class="post-title">Second Blog Post</h2>
-      <p>Content of the second blog post...</p>
-    </div>
-    <div class="blog-post">
-      <h2 class="post-title">Third Blog Post</h2>
-      <p>Content of the third blog post...</p>
-    </div>
   </body>
 </html>
