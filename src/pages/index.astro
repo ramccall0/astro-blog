@@ -9,6 +9,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       .homepage {
         display: flex;
@@ -81,7 +82,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .search-input {
-        width: 60%;
+        width: 100%;
+        max-width: 600px;
         padding: 0.8em;
         font-size: 1.2em;
         border: 1px solid #ccc;
@@ -103,6 +105,37 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
       .search-button:hover {
         background-color: #357ae8;
+      }
+      .search-results {
+        margin-top: 1em;
+        width: 100%;
+        max-width: 600px;
+        max-height: 300px;
+        overflow-y: auto;
+        text-align: left;
+      }
+
+      .search-results a {
+        display: block;
+        padding: 0.5em 0;
+        color: #4285f4;
+        text-decoration: none;
+      }
+
+      .search-results a:hover {
+        text-decoration: underline;
+      }
+
+      /* ---------- Responsive tweaks ---------- */
+      @media (min-width: 600px) {
+        .search-input,
+        .search-results {
+          width: 60%;
+        }
+
+        .search-button {
+          margin-left: 1em;
+        }
       }
     </style>
   </head>
@@ -146,25 +179,68 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       </footer>
     </main>
     <Footer />
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const searchButton = document.querySelector('.search-button');
+    <script type="module">
+      import FlexSearch from 'https://esm.run/flexsearch';
+
+      document.addEventListener('DOMContentLoaded', async () => {
         const searchInput = document.querySelector('.search-input');
+        const homepage    = document.querySelector('.homepage');
 
-        if (searchButton && searchInput) {
-          searchButton.addEventListener('click', () => {
-            const query = searchInput.value.toLowerCase();
-            const posts = document.querySelectorAll('.blog-post');
+        // Create results container
+        const resultBox = document.createElement('div');
+        resultBox.className = 'search-results';
+        homepage.appendChild(resultBox);
 
-            posts.forEach(post => {
-              const titleElement = post.querySelector('.post-title');
-              if (titleElement) {
-                const title = titleElement.textContent.toLowerCase();
-                post.style.display = title.includes(query) ? 'block' : 'none';
-              }
-            });
-          });
+        // Fetch pre‑built index
+        let data = [];
+        try {
+          const res = await fetch('/search.json');
+          if (!res.ok) throw new Error('Index fetch failed');
+          data = await res.json();
+        } catch (err) {
+          console.error(err);
+          resultBox.innerHTML = '<p style="color:red;">Search unavailable at the moment.</p>';
+          return; // abort search setup
         }
+
+        // Build FlexSearch index
+        const index = new FlexSearch.Index({ tokenize: 'forward', cache: 100 });
+        data.forEach((post, id) =>
+          index.add(id, `${post.title} ${post.excerpt} ${post.body}`)
+        );
+
+        // Render helper
+        const render = (ids = [], query = '') => {
+          if (!query) {
+            resultBox.innerHTML = '';
+            return;
+          }
+
+          if (ids.length === 0) {
+            resultBox.innerHTML = `<p>No results found for "<strong>${query}</strong>".</p>`;
+            return;
+          }
+
+          resultBox.innerHTML = ids
+            .map(i => `<a href="/blog/${data[i].slug}">${data[i].title}</a>`)
+            .join('');
+        };
+
+        // Live search
+        searchInput.addEventListener('input', () => {
+          const q   = searchInput.value.trim();
+          const ids = q ? index.search(q, 10) : [];
+          render(ids, q);
+        });
+
+        // Enter key triggers same search
+        searchInput.addEventListener('keyup', (e) => {
+          if (e.key === 'Enter') {
+            const q   = searchInput.value.trim();
+            const ids = q ? index.search(q, 10) : [];
+            render(ids, q);
+          }
+        });
       });
     </script>
 
